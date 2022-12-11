@@ -4,7 +4,6 @@ import busroute
 class BestBusCompany:
     def __init__(self):
 
-        self.__bus_schedule = None
         self.__bus_route: {classmethod} = {}
 
     def display_c(self):

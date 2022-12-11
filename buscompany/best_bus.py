@@ -4,7 +4,7 @@ import busroute
 class BestBusCompany:
     def __init__(self):
 
-        self.__bus_route: {classmethod} = {}
+        self.__bus_route: {busroute.BusRoute} = {}
 
     def display_c(self):
         for bus in self.__bus_route:

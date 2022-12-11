@@ -6,7 +6,7 @@ class ScheduledRides:
         self.origin_time = origin_time
         self.destination_time = destination_time
         self.driver_name = driver_name
-        self.delays = []
+        self.delays:list = [int]
 
     def __str__(self):
         st = "origin: "+str(self.origin_time) + " destination: " + str(self.destination_time) + " driver: " + self.driver_name

@@ -4,7 +4,7 @@ from select import select
 class CompanyServices:
     msgs_dic ={
         'msgtop': 'Welcome please select \n1. for manager \n2. for customer',
-        'msgmng':  'Please select one of the following manager options: \n1. Add route  \n2. Delete row \n3. Update row \n4. Add schedule ride',
+        'msgmng':  'Please select one of the following manager options: \n1. Show company \n2. Add route  \n3. Delete row \n4. Update row \n5. Add schedule ride',
         'msg_stop_or_cont': 'Please select 1 to continue 2 to quit',
         'msgpsng': 'Please select one of the following passenger options: \n1. Search by line  \n2. Search by origin \n3. Search by destination \n4. Search by bus stop \n5. Report delays'
         }
@@ -19,13 +19,28 @@ class CompanyServices:
 
     def add_route_f(self):
         print("add_route_f")
-        
+           #company.add_route(4,'telaviv','raanana',['petach tikva','morasha','kfar saba'])
+        line = select("Please select line number",1000);
+        if(self.__company.line_used(self)):
+            print("Line is i use!")
+            return
+        print("Please enter origin frstination and stops comma seperated")
+        data = input("Please enter: ")
+        datasplits = data.split(',')
+        if(len(datasplits) < 2):
+            print("Not enough informaton")
+            return 
+        stoplist = []
+        for i in range(2,len(datasplits)):
+            stoplist.append(datasplits[i])
+        self.__company.add_route(line,datasplits[0],datasplits[1],stoplist)
     def del_route_f(self):
         print("del_route_f")
 
     def upd_route_f(self):
         print("upd_route_f")
-
+     
+        
     def add_sched_f(self):
         print("add_sched_f")
 
@@ -47,7 +62,11 @@ class CompanyServices:
         
     def rprt_delays_f(self):
         print("rprt_delays_f")
-       
+    
+    def show_cmpny_f(self):
+        print("show_cmpny_f")
+        self.__company.display_c()
+        
     func_dict = {
         'none_f': none_f,
         'chk_pswd_f' : chk_pswd_f,
@@ -60,17 +79,19 @@ class CompanyServices:
         'srch_orig_f': srch_orig_f,
         'srch_dest_f': srch_dest_f,
         'srch_stop_f': srch_stop_f,
-        'rprt_delays_f': rprt_delays_f
+        'rprt_delays_f': rprt_delays_f,
+        'show_cmpny_f': show_cmpny_f
         }
 
-    nav = {
+    nav = {  
             'top': {'msg': 'msgtop','opts': 2,'act': 'none_f'   ,'next': {1: 'mng',2: 'psngr'}},
-            'mng': {'msg': 'msgmng','opts': 4,'act': 'chk_pswd_f','next': {1: 'add_route',2: 'del_route',3: 'upd_route',4: 'add_sched'}},
-            'mng2':{'msg': 'msgmng','opts': 4,'act': 'none_f','next': {1: 'add_route',2: 'del_route',3: 'upd_route',4: 'add_route'}},
+            'mng': {'msg': 'msgmng','opts': 5,'act': 'chk_pswd_f','next': {1: 'show_cmpny',2: 'add_route',3: 'del_route',4: 'upd_route',5: 'add_sched'}},
+            'mng2': {'msg': 'msgmng','opts': 5,'act': 'none_f','next': {1: 'show_cmpny',2: 'add_route',3: 'del_route',4: 'upd_route',5: 'add_sched'}},
             'add_route': {'msg': 'msg_stop_or_cont','opts': 2,'act': 'add_route_f','next': {1:'mng2',2: 'quit'}},
             'del_route': {'msg': 'msg_stop_or_cont','opts': 2,'act': 'del_route_f','next': {1:'mng2',2: 'quit'}},
             'upd_route': {'msg': 'msg_stop_or_cont','opts': 2,'act': 'upd_route_f','next': {1:'mng2',2: 'quit'}},
             'add_sched': {'msg': 'msg_stop_or_cont','opts': 2,'act': 'add_sched_f','next': {1:'mng2',2: 'quit'}},
+            'show_cmpny': {'msg': 'msg_stop_or_cont','opts': 2,'act': 'show_cmpny_f','next': {1:'mng2',2: 'quit'}},
             'quit': {'msg': 'msg_stop_or_cont','opts': 0,'act': 'quit_f','next': {}},
             'psngr': {'msg': 'msgpsng','opts': 5,'act': 'none_f','next': {1: 'srch_line',2: 'srch_orig',3: 'srch_dest',4: 'srch_stop',5: 'rprt_delays'}},
             'srch_line': {'msg': 'msg_stop_or_cont','opts': 2,'act': 'srch_line_f','next': {1:'psngr',2: 'quit'}},

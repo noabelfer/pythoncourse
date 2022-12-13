@@ -21,10 +21,10 @@ class CompanyServices:
         print("add_route_f")
            #company.add_route(4,'telaviv','raanana',['petach tikva','morasha','kfar saba'])
         line = select("Please select line number",1000);
-        if(self.__company.line_used(self)):
+        if(self.__company.line_used(line)):
             print("Line is i use!")
             return
-        print("Please enter origin frstination and stops comma seperated")
+        print("Please enter origin destibation and stops comma seperated")
         data = input("Please enter: ")
         datasplits = data.split(',')
         if(len(datasplits) < 2):
@@ -39,9 +39,22 @@ class CompanyServices:
 
     def upd_route_f(self):
         print("upd_route_f")
-     
-        
+       
     def add_sched_f(self):
+        line = select("Please select line number",1000);
+        if(not self.__company.line_used(line)):
+            print("Line is not in use!")
+            return
+        print("Please enter origin time,destinatiion time and driver name comma seperated")
+        data = input("Please enter: ")
+        datasplits = data.split(',')
+        if(len(datasplits) != 3):
+            print("Not enough informaton")
+            return
+        if not datasplits[0].isnumeric() or not datasplits[1].isnumeric():
+            print("Time not numeric")
+            return
+        self.__company.get_busriute(line).add_schedule(int(datasplits[0]),int(datasplits[1]),datasplits[2])
         print("add_sched_f")
 
     def quit_f(self):
@@ -82,9 +95,22 @@ class CompanyServices:
         'rprt_delays_f': rprt_delays_f,
         'show_cmpny_f': show_cmpny_f
         }
-
+    #
+    # The nav (navigatiion menu) is just a simple data structure to implement simple state machine.
+    #
+    # The state machine implemented by menu_engine below is doing as follows:
+    #   The state is the primary key to nav{} data dictionary .
+    #   1. Call entry action : CompanyServices.func_dict[CompanyServices.nav[state]['act']](self)
+    #       The nav[state]['act']  provides the name of the function as string and the function is obtained by func_dict{}
+    #   2. select(CompanyServices.msgs_dic[s],CompanyServices.nav[state]['opts'])
+    #       The select function arguments are message and number of options
+    #       the msg obtained by key 'msg' and the actual string in msgs_dic{}
+    #       number of options obtained by nav[state]['opts'] 
+    #   3. Next state = CompanyServices.nav[state]['next'][sel]
+    #      sel is the result of the select function .
+    #
     nav = {  
-            'top': {'msg': 'msgtop','opts': 2,'act': 'none_f'   ,'next': {1: 'mng',2: 'psngr'}},
+            'top': {'msg': 'msgtop','opts': 2,'act': 'none_f','next': {1: 'mng',2: 'psngr'}},
             'mng': {'msg': 'msgmng','opts': 5,'act': 'chk_pswd_f','next': {1: 'show_cmpny',2: 'add_route',3: 'del_route',4: 'upd_route',5: 'add_sched'}},
             'mng2': {'msg': 'msgmng','opts': 5,'act': 'none_f','next': {1: 'show_cmpny',2: 'add_route',3: 'del_route',4: 'upd_route',5: 'add_sched'}},
             'add_route': {'msg': 'msg_stop_or_cont','opts': 2,'act': 'add_route_f','next': {1:'mng2',2: 'quit'}},

@@ -1,8 +1,11 @@
 from best_bus import BestBusCompany
+from menusystem import CompanyServices
 
 
 if __name__ == '__main__':
     company = BestBusCompany()
+    service = CompanyServices(company)
+    service.menu_engine()
     company.add_route(4,'telaviv','raanana',['petach tikva','morasha','kfar saba'])
     company.get_busriute(4).add_schedule(9,10,'moshe')
     company.get_busriute(4).add_schedule(11,12,'dan')

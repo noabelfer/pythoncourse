@@ -9,17 +9,10 @@ class ScheduledRides:
         self.__delays:list = []
 
     def __str__(self):
-        st = "origin: "+str(self.__origin_time) + " destination: " + str(self.__destination_time) + " driver: " + \
-        self.__driver_name
-        st += "\n     delays: "
-        if len(self.__delays) == 0:
-            st+= ' None'
-            return st
-        for i in self.__delays:
-            st += ' '+str(i)
-        return st
+        return dict_2_str(self.get_as_dict(True))
 
-    def get_as_dict(self,withdriver:bool):
+
+    def get_as_dict(self,withdriver:bool)->dict:
         scheddict = {}
         scheddict['origin_time'] = self.__origin_time
         scheddict['destination_time'] = self.__destination_time
@@ -28,5 +21,7 @@ class ScheduledRides:
         scheddict['delays'] = self.__delays
         return scheddict
         
+    def add_delay(self,adelay):
+        self.__delays.append(adelay)
         
         

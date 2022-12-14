@@ -1,5 +1,7 @@
 from best_bus import BestBusCompany
 from select import select
+from select import print_dict
+
 
 class CompanyServices:
     msgs_dic ={
@@ -54,7 +56,7 @@ class CompanyServices:
         if not datasplits[0].isnumeric() or not datasplits[1].isnumeric():
             print("Time not numeric")
             return
-        self.__company.get_busriute(line).add_schedule(int(datasplits[0]),int(datasplits[1]),datasplits[2])
+        self.__company.BusRoute(line).add_schedule(int(datasplits[0]),int(datasplits[1]),datasplits[2])
         print("add_sched_f")
 
     def quit_f(self):
@@ -75,10 +77,31 @@ class CompanyServices:
         
     def rprt_delays_f(self):
         print("rprt_delays_f")
+        print(self.__company)
+        print("Pleasee fill line,schedule,delay")
+        delstr = input("Enter comma seperated: ")
+        delstrsp = delstr.split(',')
+        if len(delstrsp) != 3:
+            print('Not maching data')
+            return
+        if(not delstrsp[0].isnumeric() or not delstrsp[1].isnumeric() or not delstrsp[2].isnumeric()):
+            print('Data no numeric!')
+            return
+        line = int(delstrsp[0])
+        id = int(delstrsp[1])
+        delay = int(delstrsp[2])
+        if not self.__company.line_used(line):
+            print('Line not in use!')
+            return
+        if not self.__company.BusRoute(line).schedule_in_use(id):
+            print('Schedule not in use!')
+            return
+        self.__company.BusRoute(line).ScheduledRides(id).add_delay(delay)
+        print('Line ',line,' id ',id, ' reported: ',delay) 
     
     def show_cmpny_f(self):
         print("show_cmpny_f")
-        self.__company.display_c()
+        print(self.__company)
         
     func_dict = {
         'none_f': none_f,
@@ -127,6 +150,7 @@ class CompanyServices:
             'rprt_delays':{'msg': 'msg_stop_or_cont','opts': 2,'act': 'rprt_delays_f','next': {1:'psngr',2: 'quit'}}
           }
 
+                
     def menu_engine(self):
         state = 'top'       
         while(True):

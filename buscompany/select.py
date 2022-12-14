@@ -12,3 +12,14 @@ def select(msg:str,n_options:int)->int:
             return chint
         print("Selection not in range!")
         continue
+        
+def print_dict(mydic:dict,offset:int):
+    for key,values in mydic.items():
+        for i in range(offset):
+            print(' ', end='')
+        print(key,' : ', end='')
+        if isinstance(values,dict):
+            print()
+            print_dict(values,offset+8)
+        else:
+            print(values)

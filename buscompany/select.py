@@ -23,3 +23,18 @@ def print_dict(mydic:dict,offset:int):
             print_dict(values,offset+8)
         else:
             print(values)
+            
+def dict_2_str(mydic:dict,offset:int)->str:
+    st:str = "" 
+    for key,values in mydic.items():
+        for i in range(offset):
+            st +=' '
+
+        st += key+' : '
+        if isinstance(values,dict):
+            st += "\n"
+            st += dict_2_str(values,offset+8)
+        else:
+            st += str(values)
+            st += "\n"
+    return st

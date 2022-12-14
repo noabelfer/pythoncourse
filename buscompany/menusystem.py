@@ -61,7 +61,7 @@ class CompanyServices:
 
     def quit_f(self):
         print("quit_f")
-        exit()
+
         
     def srch_line_f(self):
         print("srch_line_f")
@@ -77,7 +77,8 @@ class CompanyServices:
         
     def rprt_delays_f(self):
         print("rprt_delays_f")
-        print(self.__company)
+        #print(self.__company,False)
+        self.__company.display_no_driver_name()
         print("Pleasee fill line,schedule,delay")
         delstr = input("Enter comma seperated: ")
         delstrsp = delstr.split(',')
@@ -153,7 +154,7 @@ class CompanyServices:
                 
     def menu_engine(self):
         state = 'top'       
-        while(True):
+        while(state != 'quit'):
             print('State : ',state)
             CompanyServices.func_dict[CompanyServices.nav[state]['act']](self)
             s = CompanyServices.nav[state]['msg']

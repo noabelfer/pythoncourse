@@ -37,6 +37,12 @@ class BestBusCompany:
         b = BusRoute(origin, destination, list_stops)
         self.__bus_route[line_num] = b
         return True
+        
+    def del_route(self, line_num:int) -> bool:
+        if not line_num in self.__bus_route:
+            return False
+        b = self.__bus_route.pop(line_num)
+        return True
 
 
 

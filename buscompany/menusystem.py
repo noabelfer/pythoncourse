@@ -38,6 +38,12 @@ class CompanyServices:
         self.__company.add_route(line,datasplits[0],datasplits[1],stoplist)
     def del_route_f(self):
         print("del_route_f")
+        line = select("Please enter line number",1000)
+        b = self.__company.del_route(line)
+        if b:
+            print('Line: '+str(line)+' removed')
+        else:
+            print('Line: '+str(line)+' not in use')
 
     def upd_route_f(self):
         print("upd_route_f")

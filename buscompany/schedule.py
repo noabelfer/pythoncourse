@@ -19,14 +19,13 @@ class ScheduledRides:
             st += ' '+str(i)
         return st
 
-    def get_data(self,withdriver:bool):
+    def get_as_dict(self,withdriver:bool):
         scheddict = {}
         scheddict['origin_time'] = self.__origin_time
         scheddict['destination_time'] = self.__destination_time
         if withdriver:
             scheddict['driver_name'] = self.__driver_name
         scheddict['delays'] = self.__delays
-        print(scheddict)
         return scheddict
         
         

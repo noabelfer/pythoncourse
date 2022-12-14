@@ -1,5 +1,6 @@
 from  random  import randrange
-from schedule import ScheduledRides
+from  select import dict_2_str
+from  schedule import ScheduledRides
 
 class BusRoute:
     def __init__(self, line_number: int, origin: str, destination: str, list_stops: list):
@@ -11,16 +12,11 @@ class BusRoute:
 
 
     def __str__(self) -> str:
-        st ='busroute: line: '+str(self.line_number) + " from: " + self.origin + ' to: '+self.destination + " stops: " + str(self.list_stops)
+        st = dict_2_str(self.get_as_dict(True),0)
         return st
-        #return str(self.line_number + " " + self.origin + " " + self.destination + " " + str(self.list_stops) )
-    
-   
-        
+       
     def display_r(self):
-        print(self.__str__())
-        for s in self.__bus_schedule:
-            print('   Schedule: ',s,' ',self.__bus_schedule[s])
+        print_dict(self.get_as_dict(True),0)
 
 
     def update_route(self, line_num, origin=None, destination=None, list_stops=None):
@@ -30,10 +26,14 @@ class BusRoute:
         s:ScheduledRides = ScheduledRides(origin_time, destination_time, driver_name)
         id:int = int(randrange(1,1000))
         self.__bus_schedule[id] = s
-    def get_data(self,with_driver_name:bool):
+        
+    def get_as_dict(self,with_driver_name:bool):
         medic = {}
+        medic['origin'] =  self.origin
+        medic['destination'] =  self.destination
+        medic['stops'] = self.list_stops
         for s in self.__bus_schedule:
-            medic[s] = self.__bus_schedule[s].get_data(with_driver_name)
+            medic['sceudle: '+str(s)] = self.__bus_schedule[s].get_as_dict(with_driver_name)
         return medic
         
 # a = BusRoute(5,'telaviv', 'ramm', ['aaa','bbb'])

@@ -4,18 +4,19 @@
 
 def longest_str(string1:str,strings_list:list)->str:   
     longest = ''
-    for i in range(len(string1)+1):
-
+    # print('string1: ',string1,' len: ',len(string1))
+    for i in range(1,len(string1)+1):
         currentstr = string1[0:i]
+        # print('i= ',i,'currentstr: ',currentstr )
         for s in range(len(strings_list)):
             if strings_list[s].find(currentstr) == -1:
                 return longest
         longest = currentstr 
     return longest
 
-def longest_all(string1:str,strings_list:list)->str:
+def longest_all(string2:str,strings_list:list)->str:
     longlong = ''
-    st = string1
+    st = string2
     while(len(st) > 0):
         sss = longest_str(st,strings_list)
         if(len(sss) > len(longlong)):

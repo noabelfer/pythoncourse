@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 
+def longest_prefix(string1:str,strings_list:list)->str: 
+    longeststr = ""
+    for i in range (1,len(string1)-1):
+        mystr = string1[0:i]
+        for j in range(len(strings_list)):
+            if(strings_list[j].find(mystr)) != 0:
+                return longeststr
+        longeststr = mystr
+    return mystr
 
 def longest_recursive(string1:str,strings_list:list)->str: 
     if(len(string1) == 0):
@@ -19,11 +28,12 @@ def longest_recursive(string1:str,strings_list:list)->str:
     return longnext if(len(longnext) > len(longest)) else longest
 
     
-strings = ['rabcde','dabcdegr','rrrabcdeftr']
+strings = ['rabcde','rabdabcdegr','rabarabcdeftr']
 st = strings[0]
 
 print(st,strings[1:len(strings)])
-abc = longest_recursive(st,strings[1:len(strings)])
+abc = longest_prefix(st,strings[1:len(strings)])
+# abc = longest_recursive(st,strings[1:len(strings)])
 print('abc=',abc)
 
  

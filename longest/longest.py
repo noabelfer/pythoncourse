@@ -25,8 +25,5 @@ st = strings[0]
 print(st,strings[1:len(strings)])
 abc = longest_recursive(st,strings[1:len(strings)])
 print('abc=',abc)
-exit()
-long_long = longest_all(st,strings[1:len(strings)])
-print('the longets',long_long)
 
  

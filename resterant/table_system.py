@@ -101,36 +101,12 @@ class TableReservationSystem:
 
         filtered = filter(lambda tabs: tabs.is_available and tabs.seats >= guests_num,ll)
         available_tables = list(filtered)
-        # print('lllllllllllllllllllllllllllllllllllllllllllllllll')
-        # print(available_tables)
-        # print('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-        # # available_tables = []
-        # # for table in ll:
-            # # #print(table,type(table))
-            # # if table.seats >= guests_num and table.is_available():
-                # # available_tables.append(table)
-        
-        # # sort by seats num ascending
         print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         print(available_tables)
         print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         available_tables.sort(key=attrgetter('seats'))
         sorted_tables = available_tables.copy()
         
-        # available_tables_len = len(available_tables)
-        
-        # for i in range(available_tables_len):
-            # min_table = available_tables[0]
-            # min_table_idx = 0
-            # for table_idx, table in enumerate(available_tables):
-
-                # # comparing tuples
-                # if table.seats < min_table.seats:
-                    # min_table = table
-                    # min_table_idx = table_idx
-
-            # sorted_tables.append(min_table)
-            # available_tables.pop(min_table_idx)
 
         return sorted_tables
 
@@ -138,10 +114,6 @@ class TableReservationSystem:
 
         # get suitable tables
         suitable_tables: list[Table] = []
-
-        # for table in self.tables:
-            # if table.seats >= guests_num:
-                # suitable_tables.append(table)
 
         # sort
         filtered = filter(lambda tabs: tabs.seats >= guests_num,self.tables)

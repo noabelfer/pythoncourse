@@ -118,7 +118,9 @@ class TableReservationSystem:
         # sort
         filtered = filter(lambda tabs: tabs.seats >= guests_num,self.tables)
         suitable_tables = list(filtered)
-       
+        
+        sorted_tables = sorted(suitable_tables, key=operator.attrgetter(get_available_time, "seats"))
+        print('sorted_tables -111 ',sorted_tables)
         sorted_tables = []
         suitable_tables_len = len(suitable_tables)
         
@@ -135,5 +137,5 @@ class TableReservationSystem:
 
             sorted_tables.append(min_table)
             suitable_tables.pop(min_table_idx)
-
+        print('sorted_tables -222 ',sorted_tables)
         return sorted_tables

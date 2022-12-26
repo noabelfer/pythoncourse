@@ -31,6 +31,7 @@ class Csvmanage:
                     start_year = k
                     n = 0
                 n += 1
+            self.__years[curr_year] = (start_year,n)
             print(self.__years)
             print(self.__csvdict[0])
             f.close()

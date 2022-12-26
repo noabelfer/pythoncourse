@@ -25,7 +25,7 @@ class TxtFile(TextFile):
         
     def __add__(self,toadd):
         st = self.get_content() + toadd.get_content()
-        fname = self._dir_path+'\\'+ self.filename + '_' + toadd.filename + '.txt'
+        fname = self._dir_path+self.filename + '_' + toadd.filename + '.txt'
         if os.path.exists(fname):
             raise Exception(f'File {fname} exists!')
         fh = open(fname,"wt")
@@ -50,7 +50,7 @@ class TxtFile(TextFile):
 aaa = TxtFile('c:\\temp\\noa\\pythoncourse\\files\\aaa.txt')
 bbb = TxtFile('c:\\temp\\noa\\pythoncourse\\files\\bbb.txt')
 print('file size aaa ',aaa.get_file_size(),' bbb ',bbb.get_file_size()) 
-ccc = aaa +bbb
+ccc = aaa + bbb
 print('type aaa ',type(aaa))
 print('type ccc ',type(ccc))
 print('file size ccc ',ccc.get_file_size())

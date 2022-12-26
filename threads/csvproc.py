@@ -2,6 +2,7 @@ import csv
 import os
 import pathlib
 from datetime import datetime
+import concurrent.futures
 
 class Csvmanage:
     def __init__(self,csvpath:str):        
@@ -20,11 +21,21 @@ class Csvmanage:
             curr_year = 0
             n = 0 
             start_year = 0
+            # loop of constructing 2 dictionaries:
+            # 1. The csv is constructed in self.__csvdict[]
+            # 2. self.__years contains a tuple for each year which includes
+            #     {'year': (start_year,n)}
+            #  start_year: is reference to self.__csvdict[] where the data for this year startswith
+            #  n : bumber of rows for this year 
+            #  in our example:
+            #    {1980: (0, 13), 1981: (13, 253), 1982: (266, 253), ...  2022: (10352, 19)}
             for k,v in enumerate(rcsv):
                 self.__csvdict[k] = v
                 date = datetime.strptime(v['Date'], "%d-%m-%Y")
+                #For first row to avoid false detection of year change
                 if(curr_year == 0):
                     curr_year = date.year
+                # here we detect year change
                 if(date.year != curr_year):
                     self.__years[curr_year] = (start_year,n)
                     curr_year = date.year
@@ -59,7 +70,19 @@ class Csvmanage:
         w.writerow(average_line)
         fh.close()
         print("ended "+str(year) +" create file: "+path)
+        return year
+
+    def run_as_threads(self):
+        first_year = list(self.__years.keys())[0]
+        last_year = list(self.__years.keys())[-1]
+        print('first_year '+str(first_year)+' last_year '+str(last_year))
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+            results = [executor.submit(self.create_year_file, i) for i in range(first_year,last_year+1)]
         
+        executor.shutdown()
+        for f in concurrent.futures.as_completed(results):
+            print(f.result())
 if __name__ == '__main__':
     a = Csvmanage('data\AAPL.csv')
-    a.create_year_file(1983)
+  #  a.create_year_file(1983)
+    a.run_as_threads()

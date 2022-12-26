@@ -69,34 +69,30 @@ class CsvFile(TextFile):
         for item in added_dict:
             src_dict[start] = added_dict[item]
             start += 1 
-        fh = open(fname,"w",newline='')
-        keys = src_dict[last_key].keys()
-        print('first line keys ',keys);
-        
-        keysList = [key for key in keys]
+        fh = open(fname,"w",newline='')      
+        keysList = [key for key in src_dict[last_key].keys()]
         print('keysList ',keysList)
-        # print('type ',type(keys))
-        # print('keys ',keys)
         w = csv.DictWriter(fh,fieldnames=keysList)
         w.writeheader()
         for l in src_dict:
-            print(l,src_dict[l])
             w.writerow(src_dict[l])
         fh.close()
-        return src_dict
-        # return src_dict
+        c = CsvFile(fname)
+        return c
+
         
   
             
-aaa = CsvFile('c:\\temp\\noa\\pythoncourse\\files\\apl1.csv')
-bbb = CsvFile('c:\\temp\\noa\\pythoncourse\\files\\apl2.csv')
-ccc = aaa +bbb 
-exit()
-# print(aaa.get_content())
-print('get_rows_num ',aaa.get_rows_num())
-print('get_columns_num ',aaa.get_columns_num())
-print(' row 20 ',aaa.get_row(20))
-print(' col 5 ',aaa.get_column(5))
+# aaa = CsvFile('c:\\temp\\noa\\pythoncourse\\files\\apl1.csv')
+# bbb = CsvFile('c:\\temp\\noa\\pythoncourse\\files\\apl2.csv')
+# ccc = aaa +bbb 
+# print(ccc.get_content())
+# exit()
+# # print(aaa.get_content())
+# print('get_rows_num ',aaa.get_rows_num())
+# print('get_columns_num ',aaa.get_columns_num())
+# print(' row 20 ',aaa.get_row(20))
+# print(' col 5 ',aaa.get_column(5))
 # # print(abc.get_content())
 # ddd = abc.__add__('c:\\temp\\noa\\pythoncourse\\files\\bbb.txt')
 # print('file size: ',ddd.get_file_size()) 

@@ -51,7 +51,7 @@ class Csvmanage:
         path = self._dir_path+ self.__filename + '_' + str(year) + '.csv'
         start_row = self.__years[year][0]
         n_rows = self.__years[year][1]
-        print("started "+str(year) + "start key: "+str(start_row)+" len: "+str(n_rows)+" create file: "+path)
+        print("started "+str(year) + " start key: "+str(start_row)+" len: "+str(n_rows)+" create file: "+path)
         fh = open(path,"w",newline='')      
         keysList = [key for key in self.__csvdict[0].keys()]
         w = csv.DictWriter(fh,fieldnames=keysList)

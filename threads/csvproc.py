@@ -59,7 +59,7 @@ class Csvmanage:
         average_line = {}
         for c in range (len(keysList)):
             average_line[keysList[c]] = float(0)
-        average_line[keysList[0]] = self.__csvdict[start_row][keysList[0]]
+        average_line[keysList[0]] = 'Average' 
         for l in range(start_row,start_row+n_rows) :
             w.writerow(self.__csvdict[l])
             for c in range (1,len(keysList)):

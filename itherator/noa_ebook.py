@@ -6,7 +6,7 @@ class MyeBook(EBook):
         super().__init__(book_path,words_num)
         self.__page_number = start_page 
         if(start_page >= self.get_total_pages()):
-            raise ValueError(f'Page {start_page} is out of range of <{self.get_total_pages()}>')
+            raise Exception(f'Page {start_page} is out of range of 0 to {self.get_total_pages()-1} ')
     
     def __iter__(self):
         return self
@@ -24,10 +24,13 @@ class MyeBook(EBook):
         
         
 if __name__ == '__main__':
-    book = MyeBook('data/alice_in_wonderland.txt', 1000,25)
-    i = 0
-    for page in book:
-        print('======================='+str(i)+'====================================')
-        print(page)
-        i += 1
+    i = 22
+    try:
+        book = MyeBook('data/alice_in_wonderland.txt', 1000,i)
+        for page in book:
+            print('======================='+str(i)+'====================================')
+            print(page)
+            i += 1
+    except Exception as e:
+        print(e)
  

@@ -19,15 +19,16 @@ class BankAccount:
             
     def withdraw(self,sum:int)->bool:
         self.lock.acquire()
+        result = True
         try:
             if(sum > self.balance):
-                self.lock.release()
-                return False
-            self.balance -= sum
-            self.transactions.append(-sum)
+                result = False
+            else:
+                self.balance -= sum
+                self.transactions.append(-sum)
         finally:
             self.lock.release()
-            return True
+            return result
         
     def get_balance(self)->int:
         return self.__balance

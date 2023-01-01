@@ -57,9 +57,6 @@ class BankAccount:
             self._transactions.append("withdraw")
         finally:
             return result
-            
-    def __blocked(self,amount)->bool:
-        return amount > self._balance
         
     def get_balance(self):
         return self._balance

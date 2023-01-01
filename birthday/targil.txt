@@ -1,0 +1,21 @@
+Tutorial: birthday dictionary
+Write a program that has 2 modes: insert mode and lookup mode.
+The program asks the user whether he wants to insert a birthday date or to look up a birthday. If the user chooses to insert 
+a new date, ask for the person's name and then ask for the person's birthday, and store them.
+If the user chooses lookup mode, ask for a name and return the birthday of the person.
+The interaction should look similar to this:
+
+
+
+Add the following logic to the birthday tutorial:
+Perform a check for the command user enters. If the input is not one of: "insert", "lookup", "quit", display relevant message and 
+go back to the main menu. In addition, write a program that will be case-insensitive to commands.
+
+When in insert mode, check whether the provided name already exists, and if so ask whether to overwrite. If yes, overwrite, 
+otherwise go back to main menu.
+
+When looking up existing names, allow users to provide only part of the name. 
+Check whether there is a match to this partial name in your dictionary, and if yes, 
+ask the user whether this is the name he looks for (one by one if multiple names are found). 
+For example, if you have in your dictionary birthdays for "Donald Trump'' and "Melania Trump", 
+and the user is in lookup mode inserted: "Trump", the interaction should be something like:

@@ -44,22 +44,14 @@ class BankAccount:
         
     @lock_deposit_decorator
     def deposit(self, amnt):
-      #  with self.lock:
         self._balance += amnt
         self._transactions.append("deposit")
     
     @lock_withdraw_decorator
     def withdraw(self, amnt)->bool:
-        try:
-            result = True
-            # while self._balance < amnt:
-                # self._cv.wait()
-
-            self._balance -= amnt
-            self._transactions.append("withdraw")
-        finally:
-            return result
-        
+        self._balance -= amnt
+        self._transactions.append("withdraw")
+         
     def get_balance(self):
         return self._balance
     

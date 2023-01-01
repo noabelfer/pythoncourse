@@ -1,7 +1,4 @@
 import threading
-from threading import Lock
-
-#import lock #as lock
 
 
 class BankAccount:
@@ -11,36 +8,58 @@ class BankAccount:
         self._account_num = _account_num
         self._balance = 0
         self._transactions = []
-        self.lock = Lock()
+        self.lock = threading.Lock()
+
 
     def __str__(self):
         return (f'name: {self._holder_name}, account_num: {self._account_num}, balance: {self._balance}')
 
-    def lock_decorator(func):
+    def lock_deposit_decorator(func):
         def wrapper(self,*args, **kwargs):
+            b = None
             self.lock.acquire()
-            b = func(self,*args, **kwargs)
-            self.lock.release()
-            return b
+            try: 
+                b = func(self,*args, **kwargs)
+            finally:
+                self.lock.release()
+                return b
         return wrapper
-
-    @lock_decorator
+        
+    def lock_withdraw_decorator(func):
+        def wrapper(self,sum):
+            b = None
+            self.lock.acquire()
+            while(sum > self._balance):
+                self.lock.release()
+                self.lock.acquire()
+                
+            try: 
+                b = func(self,sum)
+            finally:
+                self.lock.release()
+                return b
+        return wrapper
+        
+    @lock_deposit_decorator
     def deposit(self, amnt):
       #  with self.lock:
         self._balance += amnt
         self._transactions.append("deposit")
     
-    @lock_decorator
+    @lock_withdraw_decorator
     def withdraw(self, amnt)->bool:
         try:
             result = True
-            if self._balance < amnt:
-                result =  False
-            else:
-                self._balance -= amnt
-                self._transactions.append("withdraw")
+            # while self._balance < amnt:
+                # self._cv.wait()
+
+            self._balance -= amnt
+            self._transactions.append("withdraw")
         finally:
             return result
+            
+    def __blocked(self,amount)->bool:
+        return amount > self._balance
         
     def get_balance(self):
         return self._balance

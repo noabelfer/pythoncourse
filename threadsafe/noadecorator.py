@@ -12,7 +12,8 @@ class BankAccount:
 
 
     def __str__(self):
-        return (f'name: {self._holder_name}, account_num: {self._account_num}, balance: {self._balance}')
+        lent = len(self._transactions)
+        return (f'name: {self._holder_name}, account_num: {self._account_num}, balance: {self._balance},transactions: {lent}')
 
     def lock_deposit_decorator(func):
         def wrapper(self,*args, **kwargs):
@@ -26,7 +27,8 @@ class BankAccount:
         return wrapper
         
     def lock_withdraw_decorator(func):
-        def wrapper(self,sum):
+        def wrapper(self,*args, **kwargs):
+            sum = args[0]
             b = None
             self.lock.acquire()
             while(sum > self._balance):
@@ -34,7 +36,7 @@ class BankAccount:
                 self.lock.acquire()
                 
             try: 
-                b = func(self,sum)
+                b = func(self,*args, **kwargs)
             finally:
                 self.lock.release()
                 return b
@@ -66,7 +68,7 @@ class BankAccount:
 if __name__ == '__main__':
    my_account = BankAccount(123456, "Israel Israeli")
    # my_account.deposit(100)
-   # my_account.withdraw(1500)
+   # my_account.withdraw(15)
    # print(my_account._balance)
    # exit()
    def multiple_transactions_deposit(account):
@@ -92,8 +94,6 @@ if __name__ == '__main__':
    t3.join()
    t4.join()
 
-   print('my_account.balance '+str(my_account._balance))
-   print('len(my_account.transactions)) '+str(len(my_account._transactions)))
    assert my_account._balance == 0, \
        f"Expected balance: 0, received: {my_account._balance}"
    assert len(my_account._transactions) == 799960, \

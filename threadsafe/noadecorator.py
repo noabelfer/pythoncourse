@@ -76,6 +76,8 @@ if __name__ == '__main__':
    t3.join()
    t4.join()
 
+   print('my_account.balance '+str(my_account._balance))
+   print('len(my_account.transactions)) '+str(len(my_account._transactions)))
    assert my_account._balance == 0, \
        f"Expected balance: 0, received: {my_account._balance}"
    assert len(my_account._transactions) == 799960, \

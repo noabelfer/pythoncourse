@@ -32,7 +32,7 @@ def dict_2_str(mydic:dict,offset:int)->str:
             st += "\n"
     return st
     
-def search_path(path:str):
+def search_path(path:str)->dict:
     files_dict = {}
     files_and_dirs = os.listdir(path)
     files_list = []

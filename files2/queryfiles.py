@@ -1,36 +1,6 @@
 import os
+import json
 
-def fill_space(count):
-    st = ""
-    for i in range(count):
-        st +=' '
-    return st
-    
-def dict_2_str(mydic:dict,offset:int)->str:
-    st:str = "" 
-    for key,values in mydic.items():
-        st += fill_space(offset)
-        # for i in range(offset):
-            # st +=' '
-
-        st += key+' : '
-        if isinstance(values,dict):
-            st += "{\n"
-            st += dict_2_str(values,offset+4)
-            st += fill_space(offset)
-            st += "}\n"
-        elif isinstance(values,list):
-            st += "[\n"
-            for l in values:
-                st += fill_space(offset+4)
-                st += l
-                st += ",\n"
-            st += fill_space(offset+4)
-            st += "]\n"
-        else:
-            st += str(values)
-            st += "\n"
-    return st
     
 def search_path(path:str)->dict:
     files_dict = {}
@@ -54,6 +24,7 @@ def search_path(path:str)->dict:
     return files_dict
         
 if __name__ == '__main__':
-    d = search_path('..')
+    d = search_path('.')
+    json_data = json.dumps(d,indent=4, separators=(',', ': '))
     print('--------------------------- dict -----------------------')
-    print(dict_2_str(d,4))
+    print(json_data)

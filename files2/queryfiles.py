@@ -19,9 +19,19 @@ def search_path(path:str)->dict:
         files_dict['files'] = files_list
  
     return files_dict
-        
+
+def store_path(path:str,json_path=None)->dict:
+    dict = search_path(path)
+    if((json_path != None) and os.path.exists(json_path)):
+        path = os.path.join(json_path, "files.json")
+        json_data = json.dumps(dict,indent=4, separators=(',', ': '))
+        with open(path, 'w') as f:
+            f.write(json_data)
+            f.close()
+    return dict
+    
 if __name__ == '__main__':
-    d = search_path('.')
+    d = store_path('.',"c:\\temp")
     json_data = json.dumps(d,indent=4, separators=(',', ': '))
     print('--------------------------- dict -----------------------')
     print(json_data)

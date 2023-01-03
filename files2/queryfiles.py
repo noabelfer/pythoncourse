@@ -44,10 +44,7 @@ def search_path(path:str):
             if(files_dict == {}):
                 files_dict['dirs'] = {}
             d = search_path(os.path.join(path, name))
-            if(d != {}):
-                files_dict['dirs'][name] = d
-            else:
-                files_dict['dirs'][name] = {}
+            files_dict['dirs'][name] = d
             dir_list.append(name)
         else:
             files_list.append(name)

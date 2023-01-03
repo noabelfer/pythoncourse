@@ -51,8 +51,7 @@ def search_path(path:str):
 
     if(files_list != []):
         files_dict['files'] = files_list
-    if(files_list == [] and dir_list == []):
-        return {}
+ 
     return files_dict
         
 if __name__ == '__main__':

@@ -9,8 +9,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('urls', nargs='+', help='List of urls to be scanned')
 parser.add_argument('-s', '--scan', action='store_true', help='Scan')
-parser.add_argument('--apikey', help='VTAPI user api key')
-
+parser.add_argument('-apikey', help='API KEY')
 
 args = parser.parse_args()
 print(args)
@@ -25,4 +24,7 @@ if(apikey==None):
 
 #print('urls: '+str(urls)+' toscan: '+str(toscan) + ' apikey: '+str(apikey))
 vt = vtapi.Vtapi(urls,apikey,toscan)
-vt.run_as_threads()
+
+resp = vt.get_reputation(0)
+json_string = json.dumps(resp, indent=4)
+print(json_string)
